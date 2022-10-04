@@ -1,5 +1,5 @@
 import React from "react";
-
+import { FaMoon } from "react-icons/fa";
 const DarkModeToggle = () => {
   return (
     <div className="dark-mode">

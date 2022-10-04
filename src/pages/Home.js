@@ -15,7 +15,6 @@ const Home = () => {
       <Popular />
       <Upcoming />
       <TrendingMovies />
-      <Navigations />
       <Footer />
       {/* <Loading /> */}
     </main>

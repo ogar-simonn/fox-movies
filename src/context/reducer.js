@@ -1,27 +1,20 @@
 const reducer = (state, action) => {
-  if (action.type === "LOADING") {
+  if (action.type === "MAIN_MOVIES") {
     return {
       ...state,
+      movies: {
+        ...state.movies,
+        popular: action.payload.popular,
+        upcoming: action.payload.upcoming,
+        trending: action.payload.trending,
+      },
       loading: false,
     };
   }
-  if (action.type === "UPDATE_POPULAR_MOVIES") {
+  if (action.type === "UPDATE_SEARCH_RESULT") {
     return {
       ...state,
-      popularMovies: action.payload,
-    };
-  }
-  if (action.type === "UPDATE_TRENDING_MOVIES") {
-    return {
-      ...state,
-      loading: false,
-      popularMovies: action.payload,
-    };
-  }
-  if (action.type === "UPDATE_UPCOMING_MOVIES") {
-    return {
-      ...state,
-      popularMovies: action.payload,
+      searchResult: action.payload,
     };
   }
   if (action.type === "GET_GENRES") {
@@ -46,13 +39,45 @@ const reducer = (state, action) => {
     );
     return {
       ...state,
-      genres: [...state.genres, action.payload].sort((a, b) => {
-        return a > b ? 1 : a === b ? 0 : -1;
-      }),
+      genres: [...state.genres, action.payload],
       selectedGenre: newArr,
     };
   }
-
+  if (action.type === "UPDATE_SEARCH_TERM") {
+    return {
+      ...state,
+      searchTerm: action.payload,
+    };
+  }
+  if (action.type === "UPDATE_SINGLE_MOVIE") {
+    return {
+      ...state,
+      movie: action.payload,
+      loading: false,
+    };
+  }
+  if (action.type === "GENRE_MOVIES") {
+    return {
+      ...state,
+      moviesByGenre: action.payload,
+      loading: false,
+    };
+  }
+  if (action.type === "WATCHLIST") {
+    return {
+      ...state,
+      watchList: [action.payload, ...state.watchList],
+    };
+  }
+  if (action.type === "REMOVE_WATCHLIST") {
+    const newList = state.watchList.filter((list) => {
+      return list.id !== action.payload;
+    });
+    return {
+      ...state,
+      watchList: newList,
+    };
+  }
   return {};
 };
 export default reducer;

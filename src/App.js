@@ -1,15 +1,17 @@
 import React from "react";
-import { Home, Discover, Search, SingleMovie } from "./pages";
+import { Home, Discover, Search, SingleMovie, Error } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { Navigations } from "./components";
 const App = () => {
   return (
     <BrowserRouter>
+      <Navigations />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/discover" element={<Discover />} />
-        <Route path="/single-movie" element={<SingleMovie />} />
+        <Route path="/single-movie/:id" element={<SingleMovie />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

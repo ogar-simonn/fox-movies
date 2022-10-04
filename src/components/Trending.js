@@ -1,46 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import placholder1 from "./placeholder-img.jpg";
-import placholder2 from "./placeholder-2.jpg";
-import placholder3 from "./placeholder-3.jpg";
+import { useContextGlobal } from "../context/context";
+import MovieList from "./MovieList";
+import { Loading } from "../components";
 const Trending = () => {
+  const { movies, loading, IMG_PATH } = useContextGlobal();
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <section className="main-section">
       <header>
-        <h3>Trending</h3>
+        <h3>Popular Movies</h3>
       </header>
       <div className="movies">
-        <div className="movie">
-          <div>
-            <img src={placholder1} alt="breaking bad" />
-            <h4 className="movie-title">Breaking bad</h4>
-            <p>2015</p>
-          </div>
-        </div>
-        <div className="movie">
-          <div>
-            <img src={placholder2} alt="breaking bad" />
-            <h4 className="movie-title">Breaking bad</h4>
-            <p>2011</p>
-          </div>
-        </div>
-        <div className="movie">
-          <div>
-            <img src={placholder3} alt="breaking bad" />
-            <h4 className="movie-title">Breaking bad</h4>
-            <p>2021</p>
-          </div>
-        </div>
-        <div className="movie">
-          <div>
-            <img src={placholder3} alt="breaking bad" />
-            <h4 className="movie-title">Breaking bad</h4>
-            <p>1999</p>
-          </div>
-        </div>
-        <div>
-          <button className="btn">see more</button>
-        </div>
+        {movies.trending.map((movie) => {
+          return <MovieList {...movie} IMG_PATH={IMG_PATH} />;
+        })}
       </div>
     </section>
   );
