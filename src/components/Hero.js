@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <article className="hero-content">
@@ -10,9 +11,9 @@ const Hero = () => {
         minus saepe laudantium reiciendis ullam nihil rerum possimus, laboriosam
         quas!
       </p>
-      <link to="/discover" className="btn">
+      <Link to="/discover" className="btn">
         Discover Movies
-      </link>
+      </Link>
     </article>
   );
 };
