@@ -3,4 +3,6 @@ import Search from "./Search";
 import SingleMovie from "./SingleMovie";
 import Discover from "./Discover";
 import Error from "./Error";
-export { Home, Search, SingleMovie, Discover, Error };
+import WatchList from "./WatchList";
+import AllMovies from "./AllMovies";
+export { Home, Search, SingleMovie, Discover, Error, WatchList, AllMovies };

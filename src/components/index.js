@@ -11,6 +11,7 @@ import Footer from "./Footer";
 import MovieList from "./MovieList";
 import SearchForm from "./SearchForm";
 import GenreMovies from "./genreMovies";
+
 export {
   Header,
   Loading,

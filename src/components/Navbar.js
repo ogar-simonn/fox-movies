@@ -11,7 +11,6 @@ const Navbar = () => {
           <Link to="/">
             <Logo />
           </Link>
-          <DarkModeToggle />
         </div>
       </div>
     </nav>

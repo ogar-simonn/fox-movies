@@ -31,7 +31,6 @@ const Discover = () => {
         <h3>Discover movies</h3>
       </header>
       <div>
-        <Navigations />
         <p>Discover movies by their genre.</p>
         {selectedGenre.map((item) => {
           return (

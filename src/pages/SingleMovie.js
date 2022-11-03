@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Navigations, Navbar, Loading, Footer } from "../components";
+import { setLoading, Loading, Footer } from "../components";
+import { useContextGlobal } from "../context/context";
 import axios from "axios";
 
 const SingleMovie = () => {
+  console.log(process.env.API_KEY);
   const mainURL = `https://api.themoviedb.org/3/movie/`;
-  const singleMovieUrl = `?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21&language=en-US`;
+  const singleMovieUrl = `?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`;
+
   const { id } = useParams();
   const [movie, setMovie] = useState({});
+  const { watchList } = useContextGlobal();
   const [loading, setLoading] = useState(true);
+  const [pageId, setPageId] = useState(id);
   const [recommendations, setRecommendations] = useState([]);
   const fetchRecomendations = async (id) => {
     const response = await axios(
-      `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21`
+      `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_API_KEY}`
     );
     const { results } = response.data;
+    setRecommendations(results);
   };
   useEffect(() => {
     const fetchSingleMovie = async (id) => {
@@ -48,7 +54,7 @@ const SingleMovie = () => {
 
     fetchSingleMovie(id);
     fetchRecomendations(id);
-  }, [id]);
+  }, [pageId]);
   if (loading) {
     return (
       <section className="section">
@@ -76,23 +82,23 @@ const SingleMovie = () => {
   } = movie;
 
   return (
-    <main className="section">
+    <section>
       <header
         style={{ backgroundImage: `url(${IMG_PATH + backdrop_path})` }}
         className="hero-section"
       >
         <div className="hero-container">
           <article className="hero-content hero-content-single-page">
-            <h3 className="hero-movie-title">{original_title}</h3>
+            <h3 className="hero-content-title">{original_title}</h3>
           </article>
         </div>
       </header>
 
-      <div className="details-section">
-        <div className="overview-section">
+      <div className="section">
+        <article className="overview-section">
           <h2>Overview</h2>
           <p>{overview}</p>
-        </div>
+        </article>
 
         <div className="card-container">
           <div className="card">
@@ -107,8 +113,8 @@ const SingleMovie = () => {
             </h5>
           </div>
           <div className="card">
-            <h4>vote average</h4>
-            <h5>{vote_average}</h5>
+            <h4>Rating</h4>
+            <h5>{vote_average.toFixed(1)}</h5>
           </div>
           <div className="card">
             <h4>Genres</h4>
@@ -120,20 +126,28 @@ const SingleMovie = () => {
           </div>
         </div>
       </div>
-      <section className="recommendations card-container">
-        {recommendations.map((item, index) => {
-          const { poster_path } = item;
-          return (
-            <div className="recommendation" key={index}>
-              <Link to={`/single-movie/${id}`}>
-                <img src={IMG_PATH + poster_path} className="rec-movie" />
-              </Link>
-            </div>
-          );
-        })}
+      <section className="recommendations">
+        <h3>More Movies like {original_title}</h3>
+        <div className="movies-container">
+          {recommendations.map((item, index) => {
+            const { poster_path, id } = item;
+            return (
+              <div className="recommendation" key={index}>
+                <Link
+                  to={`/single-movie/${id}`}
+                  onClick={() => {
+                    setPageId(id);
+                  }}
+                >
+                  <img src={IMG_PATH + poster_path} className="rec-movie" />
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </section>
       <Footer />
-    </main>
+    </section>
   );
 };
 

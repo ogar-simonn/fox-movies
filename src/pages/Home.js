@@ -1,4 +1,5 @@
 import React from "react";
+import { Alert } from "@mui/material";
 import {
   Header,
   TrendingMovies,
@@ -16,7 +17,6 @@ const Home = () => {
       <Upcoming />
       <TrendingMovies />
       <Footer />
-      {/* <Loading /> */}
     </main>
   );
 };

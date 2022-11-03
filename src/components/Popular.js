@@ -1,7 +1,9 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import MovieList from "./MovieList";
 import Loading from "./Loading";
+import { BsArrowRight } from "react-icons/bs";
+
 import { useContextGlobal } from "../context/context";
 const Popular = () => {
   const { movies, loading, IMG_PATH } = useContextGlobal();
@@ -10,12 +12,16 @@ const Popular = () => {
   }
 
   return (
-    <section className="main-section">
-      <header>
-        <h3>Popular Movies</h3>
+    <section className="section">
+      <header className="flex-header">
+        <h3>Popular</h3>
+        <Link to="/all-movies/popular" className="see-all-link">
+          See All &nbsp;
+          <BsArrowRight />
+        </Link>
       </header>
       <div className="movies">
-        {movies.popular.map((movie) => {
+        {movies.popular.slice(0, 7).map((movie) => {
           return <MovieList {...movie} IMG_PATH={IMG_PATH} />;
         })}
       </div>

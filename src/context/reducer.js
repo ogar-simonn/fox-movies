@@ -63,7 +63,7 @@ const reducer = (state, action) => {
       loading: false,
     };
   }
-  if (action.type === "WATCHLIST") {
+  if (action.type === "ADD_WATCHLIST") {
     return {
       ...state,
       watchList: [action.payload, ...state.watchList],

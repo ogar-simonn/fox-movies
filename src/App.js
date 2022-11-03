@@ -1,5 +1,13 @@
 import React from "react";
-import { Home, Discover, Search, SingleMovie, Error } from "./pages";
+import {
+  Home,
+  Discover,
+  Search,
+  SingleMovie,
+  Error,
+  WatchList,
+  AllMovies,
+} from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigations } from "./components";
 const App = () => {
@@ -11,6 +19,8 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/single-movie/:id" element={<SingleMovie />} />
+        <Route path="/watchlist" element={<WatchList />} />
+        <Route path="/all-movies/:section" element={<AllMovies />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

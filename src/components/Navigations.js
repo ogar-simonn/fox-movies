@@ -1,33 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import data from "../context/Data";
 import { Link } from "react-router-dom";
-import { AiFillHome } from "react-icons/ai";
-import { BsSearch } from "react-icons/bs";
-import { MdPlaylistPlay, MdOutlineExplore } from "react-icons/md";
-import { BiSearchAlt2 } from "react-icons/bi";
+
 const Navigations = () => {
+  const [value, setValue] = useState(0);
+  const [active, setActive] = useState(false);
   return (
     <nav className="navigations">
       <div className="navigations-container">
-        <div className="home-link">
-          <Link to="/">
-            <AiFillHome className="icon home" />
-          </Link>
-        </div>
-        <div className="search-link">
-          <Link to="/search">
-            <BiSearchAlt2 className="icon search" />
-          </Link>
-        </div>
-        <div className="discover-link">
-          <Link to="/discover">
-            <MdOutlineExplore className="icon  discover" />
-          </Link>
-        </div>
-        <div className="watchlist-link">
-          <Link to="/watchlist">
-            <MdPlaylistPlay className="icon watchlist" />
-          </Link>
-        </div>
+        {data.map((item, index) => {
+          return (
+            <Link
+              to={item.url}
+              onClick={() => setValue(index)}
+              className={`nav-icon ${index === value ? "active" : ""}`}
+            >
+              {item.icon}
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

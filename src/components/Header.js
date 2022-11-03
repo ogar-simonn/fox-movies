@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
+import Logo from "./Logo";
 import { useContextGlobal } from "../context/context";
 import Loading from "./Loading";
 const Header = () => {

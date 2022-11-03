@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, useState, useEffect } from "react";
+
 import reducer from "./reducer";
-import data from "./data";
 import axios from "axios";
 const AppContext = React.createContext();
 const defaultState = {
@@ -17,19 +17,17 @@ const defaultState = {
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const [index, setIndex] = useState(0);
-  const [activeSlide, setActiveSlide] = useState(data[index]);
 
   const IMG_PATH = "https://image.tmdb.org/t/p/w1280";
 
   const mainURL = `https://api.themoviedb.org/3/movie/`;
-  const popularUrl = `popular?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21`;
-  const upcomingUrl = `upcoming?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21`;
+  const popularUrl = `popular?api_key=${process.env.REACT_APP_API_KEY}`;
+  const upcomingUrl = `upcoming?api_key=${process.env.REACT_APP_API_KEY}`;
 
-  const trendingUrl = `https://api.themoviedb.org/3/trending/all/week?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21`;
-  const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21&language=en-US&query=`;
+  const trendingUrl = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_API_KEY}`;
+  const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=`;
   const recomendationUrl = `https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=`;
-
+  const singleMovieUrl = `?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`;
   const fetchMovies = async () => {
     await Promise.allSettled([
       axios(`${mainURL}${popularUrl}`),
@@ -54,7 +52,7 @@ const AppProvider = ({ children }) => {
   };
 
   const getMoviesByGenre = async (ids) => {
-    const genreMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${ids}&with_watch_monetization_types=flatrate`;
+    const genreMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${ids}&with_watch_monetization_types=flatrate`;
     const response = await axios(genreMoviesUrl);
     const { results } = await response.data;
     console.log(results);
@@ -99,6 +97,7 @@ const AppProvider = ({ children }) => {
         vote_average,
       } = data;
       const newMovie = {
+        id,
         backdrop_path,
         poster_path,
         genres,
@@ -113,9 +112,8 @@ const AppProvider = ({ children }) => {
   };
 
   const addToWatchList = async (id) => {
-    await fetchSingleMovie(id).then((data) => {
-      dispatch({ type: "WATCHLIST", payload: data });
-    });
+    const movie = await fetchSingleMovie(id);
+    dispatch({ type: "ADD_WATCHLIST", payload: movie });
   };
   const removeFromWatchList = (id) => {
     dispatch({ type: "REMOVE_WATCHLIST", payload: id });
@@ -134,6 +132,9 @@ const AppProvider = ({ children }) => {
         IMG_PATH,
         getMoviesByGenre,
         fetchGenres,
+        fetchSingleMovie,
+        addToWatchList,
+        removeFromWatchList,
       }}
     >
       {children}

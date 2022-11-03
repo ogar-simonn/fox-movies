@@ -1,22 +1,28 @@
+import { AiOutlineHome } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
+import { MdPlaylistPlay, MdOutlineExplore } from "react-icons/md";
+import { BiSearchAlt2 } from "react-icons/bi";
+
 const data = [
   {
-    id: 1,
-    img: "./images/img-1.jpg",
-    title: "Breaking Bad",
-    desc: "lorm dolor sit",
+    label: "Home",
+    url: "/",
+    icon: <AiOutlineHome />,
   },
   {
-    id: 1,
-    img: "./images/img-2.jpg",
-    title: "Breaking Bad",
-    desc: "lorm dolor sit amet",
+    label: "Search",
+    url: "/search",
+    icon: <BsSearch />,
   },
   {
-    id: 1,
-    img: "./images/img-3.jpg",
-    title: "Breaking Bad",
-    desc: "lorm dolor sit amet",
+    label: "Discover",
+    url: "/discover",
+    icon: <MdOutlineExplore />,
+  },
+  {
+    label: "PlayList",
+    url: "/watchlist",
+    icon: <MdPlaylistPlay />,
   },
 ];
-
 export default data;
