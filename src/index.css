@@ -176,7 +176,7 @@ nav {
 .hero-section {
   background-position: center;
   background-size: cover;
-  height: 70vh;
+  height: 50vh;
   position: relative;
   width: 100vw;
 }
@@ -492,9 +492,21 @@ Single Movie
   font-size: 0.8rem;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .plus-icon {
   font-size: 1.5rem;
   display: inline-block;
+}
+.discover-header h3 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+.discover-header p {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+.discover-chips {
+  margin-bottom: 1rem;
 }

@@ -15,7 +15,7 @@ const Discover = () => {
   } = useContextGlobal();
   const [loading, setLoading] = useState(true);
   const genreId = useGenre(selectedGenre);
-  const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=67b88c8062ce3cdf8f0b2d0f65fb0a21&language=en-US`;
+  const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`;
   useEffect(() => {
     const genreInit = async () => {
       await fetchGenres(genreUrl).then(() => setLoading(false));
@@ -27,11 +27,11 @@ const Discover = () => {
   }, [genres]);
   return (
     <section className="section">
-      <header>
+      <header className="discover-header">
         <h3>Discover movies</h3>
+        <p>Discover movies by their genre.</p>
       </header>
       <div>
-        <p>Discover movies by their genre.</p>
         {selectedGenre.map((item) => {
           return (
             <Chip
@@ -47,22 +47,24 @@ const Discover = () => {
           <Loading />
         ) : (
           <div>
-            {genres.map((item) => {
-              const list = [...item.name];
-              return (
-                <Chip
-                  key={item.id}
-                  color="primary"
-                  clickable
-                  onClick={() => addToGenre(item)}
-                  label={list.map((item) => {
-                    return item;
-                  })}
-                  style={{ margin: "0.2rem 0.2rem", fontSize: "1rem" }}
-                  variant="outlined"
-                />
-              );
-            })}
+            <div className="discover-chips">
+              {genres.map((item) => {
+                const list = [...item.name];
+                return (
+                  <Chip
+                    key={item.id}
+                    color="primary"
+                    clickable
+                    onClick={() => addToGenre(item)}
+                    label={list.map((item) => {
+                      return item;
+                    })}
+                    style={{ margin: "0.2rem 0.2rem", fontSize: "1rem" }}
+                    variant="outlined"
+                  />
+                );
+              })}
+            </div>
             <GenreMovies />
           </div>
         )}
